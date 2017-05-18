@@ -1,0 +1,72 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/foundation.css' %}" >
+    <link rel="stylesheet" type="text/css" href="{% static 'css/foundation.min.css' %}" >
+    <title>Django Project</title>
+    <style>
+        body{
+            background: url("/media/images/whiteback.jpg");
+            background-position: center;
+        }
+        .text{
+            text-align: center;
+        }
+        .transparent{
+            background-color: rgba(20, 40, 10, 0.3);
+        }
+    </style>
+
+</head>
+<body>
+<div class="row">
+    <div class="large-8 large-centered columns">
+        <div class="text">
+        <h1><span style="color:#00ff00"><span style="font-size:28px"><span style="font-family:Georgia,serif"><code>ПРОГРАММИРОВАНИЕ С НУЛЯ</code></span></span></span></h1>
+        </div>
+    </div>
+</div>
+<div class="text">
+<div class="top-bar">
+    <div class="row">
+        <div class="large-3 columns">
+            <div class="h2"><a href="/page/1/">Главная </a></div>
+        </div>
+
+        <div class="large-3 columns">
+            <div class="h2"><a href="/">Блог </a></div>
+        </div>
+
+        <div class="large-3 columns">
+            <div class="h2"><a href="/admin/">Админ </a></div>
+        </div>
+                {% if username %}
+                    <li><a href="/auth/logout/">Выйти ({{ username }})</a></li>
+                {% else %}
+                    <li><a href="/auth/login/">Войти</a></li>
+                {% endif %}
+    </div>
+</div>
+</div>
+
+
+<p class="large-12 columns">Путь к нашему проекту {{ path }}</p>
+<div class="transparent">
+<div class="large-9 columns panel">
+{% block rembo %}{% endblock %}
+{% block login %}{% endblock %}
+{% block content %}{% endblock %}
+</div>
+</div>
+<div class="large-3 columns">облако тегов:
+    {% for keyword in keywords %}
+        <a href="/keyword/{{ keyword.id }}">{{ keyword }}</a>
+
+        {% if not forloop.last %}, {% endif %}
+    {% endfor %}
+</div>
+</body>
+</html>

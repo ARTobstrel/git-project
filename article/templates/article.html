@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% load staticfiles %}
+
+{% block rembo %}
+    <h4>{{ article.article_date }}</h4>
+    <h2>{{ article.article_title }}</h2>
+    <p>{% autoescape off %}{{ article.article_text }}{% endautoescape %}</p>
+
+    <div>
+        {% if article.article_image %}
+            <img src="{{ MEDIA_URL }}{{ article.article_image.url }}" />
+        {% endif %}
+    </div>
+
+    <hr />
+    <div class="large-offset-1 large-10 columns">
+    <p>Комментарии:</p>
+    {% for comment in comments %}
+        <p>{{ comment.comments_text }}</p>
+        <p align="right">{{ comment.comments_author.username }} - {{ comment.comments_date }}</p>
+        <hr />
+    {% endfor %}
+    {% if username %}
+    <form action="/article/addcomment/{{ article.id }}/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" class="button" value="Добавить комментарий" />
+    {% endif %}
+    </form>
+    </div>
+{% endblock %}
